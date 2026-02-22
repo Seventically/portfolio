@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<meta http-equiv="Content-Security-Policy" content="default-src 'self'; style-src 'self' 'unsafe-inline' https://fonts.googleapis.com; font-src https://fonts.gstatic.com; img-src 'self' data: https:; script-src 'self' 'unsafe-inline';">
+<meta http-equiv="Content-Security-Policy" content="default-src 'self'; style-src 'self' 'unsafe-inline' https://fonts.googleapis.com; font-src https://fonts.gstatic.com; img-src 'self' data: https:; script-src 'self' 'unsafe-inline'; form-action https://formspree.io; connect-src https://formspree.io;">
 <meta http-equiv="X-Frame-Options" content="DENY">
 <meta http-equiv="X-Content-Type-Options" content="nosniff">
 <meta http-equiv="Referrer-Policy" content="strict-origin-when-cross-origin">
@@ -571,6 +571,61 @@
     .about-grid, .skills-grid, .contact-inner { grid-template-columns: 1fr; gap: 2.5rem; }
     footer { flex-direction: column; gap: 0.5rem; text-align: center; }
   }
+
+  /* CONTACT FORM */
+  .contact-form {
+    margin-top: 2rem;
+  }
+  .form-group {
+    margin-bottom: 1.2rem;
+  }
+  .form-group label {
+    display: block;
+    font-family: 'Share Tech Mono', monospace;
+    font-size: 0.7rem; color: var(--green);
+    letter-spacing: 0.15em; text-transform: uppercase;
+    margin-bottom: 0.5rem;
+  }
+  .form-group input,
+  .form-group textarea {
+    width: 100%;
+    background: var(--card);
+    border: 1px solid var(--border);
+    color: var(--text);
+    font-family: 'DM Sans', sans-serif;
+    font-size: 0.9rem;
+    padding: 0.75rem 1rem;
+    outline: none;
+    transition: border-color 0.2s;
+    resize: none;
+  }
+  .form-group input:focus,
+  .form-group textarea:focus {
+    border-color: var(--green);
+    box-shadow: 0 0 10px var(--green-glow);
+  }
+  .form-group textarea { height: 130px; }
+  .form-submit {
+    width: 100%;
+    padding: 0.85rem;
+    background: var(--green);
+    color: #000;
+    font-family: 'Share Tech Mono', monospace;
+    font-size: 0.8rem; letter-spacing: 0.15em;
+    text-transform: uppercase;
+    border: none; cursor: pointer;
+    transition: all 0.25s;
+  }
+  .form-submit:hover {
+    background: #fff;
+    box-shadow: 0 0 25px var(--green);
+  }
+  .form-success {
+    display: none;
+    font-family: 'Share Tech Mono', monospace;
+    font-size: 0.8rem; color: var(--green);
+    margin-top: 1rem; letter-spacing: 0.1em;
+  }
 </style>
 </head>
 <body>
@@ -884,20 +939,23 @@
           </a>
         </div>
       </div>
-      <div class="terminal-block">
-        <div class="terminal-bar">
-          <div class="dot red"></div>
-          <div class="dot yellow"></div>
-          <div class="dot green"></div>
-        </div>
-        <div class="t-line"><span class="prompt">~/fahad-alanazi $</span> <span class="cmd">whoami</span></div>
-        <div class="t-line"><span class="out">fahad_alanazi — aspiring cybersecurity professional</span></div>
-        <div class="t-line"><span class="prompt">~/fahad-alanazi $</span> <span class="cmd">cat goals.txt</span></div>
-        <div class="t-line"><span class="out">- Earn CompTIA Security+ certification</span></div>
-        <div class="t-line"><span class="out">- Study Computer Science / Cybersecurity</span></div>
-        <div class="t-line"><span class="out">- Contribute to open-source security tools</span></div>
-        <div class="t-line"><span class="out">- Join a CTF team in college</span></div>
-        <div class="t-line"><span class="prompt">~/fahad-alanazi $</span> <span class="cursor-blink"></span></div>
+      <div class="contact-form">
+        <form action="https://formspree.io/f/mpqjozrr" method="POST" id="contactForm">
+          <div class="form-group">
+            <label for="name">// Your Name</label>
+            <input type="text" id="name" name="name" placeholder="John Doe" required>
+          </div>
+          <div class="form-group">
+            <label for="email">// Your Email</label>
+            <input type="email" id="email" name="email" placeholder="john@example.com" required>
+          </div>
+          <div class="form-group">
+            <label for="message">// Message</label>
+            <textarea id="message" name="message" placeholder="What's on your mind..." required></textarea>
+          </div>
+          <button type="submit" class="form-submit">[ Send Message ]</button>
+          <div class="form-success" id="formSuccess">✓ Message sent successfully!</div>
+        </form>
       </div>
     </div>
   </div>
