@@ -1,0 +1,956 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Fahad Alanazi — Cybersecurity Portfolio</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Share+Tech+Mono&family=Syne:wght@400;600;800&family=DM+Sans:ital,wght@0,300;0,400;1,300&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --bg: #060a0f;
+    --bg2: #0d1520;
+    --bg3: #111c2e;
+    --green: #00ff88;
+    --green-dim: #00ff8844;
+    --green-glow: #00ff8820;
+    --cyan: #00d4ff;
+    --red: #ff3366;
+    --text: #c8d8e8;
+    --text-dim: #5a7a9a;
+    --border: #1a3050;
+    --card: #0a1828;
+  }
+
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+
+  html { scroll-behavior: smooth; }
+
+  body {
+    background: var(--bg);
+    color: var(--text);
+    font-family: 'DM Sans', sans-serif;
+    font-weight: 300;
+    overflow-x: hidden;
+    cursor: none;
+  }
+
+  /* CUSTOM CURSOR */
+  .cursor {
+    position: fixed; width: 12px; height: 12px;
+    background: var(--green); border-radius: 50%;
+    pointer-events: none; z-index: 9999;
+    transform: translate(-50%, -50%);
+    transition: transform 0.1s, width 0.2s, height 0.2s, opacity 0.2s;
+    mix-blend-mode: screen;
+  }
+  .cursor-ring {
+    position: fixed; width: 36px; height: 36px;
+    border: 1px solid var(--green); border-radius: 50%;
+    pointer-events: none; z-index: 9998;
+    transform: translate(-50%, -50%);
+    transition: transform 0.15s ease, width 0.3s, height 0.3s;
+    opacity: 0.5;
+  }
+
+  /* NOISE OVERLAY */
+  body::before {
+    content: '';
+    position: fixed; inset: 0;
+    background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noise'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noise)' opacity='0.04'/%3E%3C/svg%3E");
+    pointer-events: none; z-index: 0; opacity: 0.35;
+  }
+
+  /* NAV */
+  nav {
+    position: fixed; top: 0; left: 0; right: 0; z-index: 100;
+    padding: 1.2rem 3rem;
+    display: flex; justify-content: space-between; align-items: center;
+    border-bottom: 1px solid var(--border);
+    background: rgba(6, 10, 15, 0.85);
+    backdrop-filter: blur(20px);
+  }
+  .nav-logo {
+    font-family: 'Share Tech Mono', monospace;
+    color: var(--green); font-size: 1rem;
+    letter-spacing: 0.1em;
+  }
+  .nav-links { display: flex; gap: 2.5rem; list-style: none; }
+  .nav-links a {
+    font-family: 'Share Tech Mono', monospace;
+    color: var(--text-dim); text-decoration: none;
+    font-size: 0.75rem; letter-spacing: 0.15em; text-transform: uppercase;
+    transition: color 0.2s;
+    position: relative;
+  }
+  .nav-links a::before {
+    content: '> ';
+    color: var(--green); opacity: 0;
+    transition: opacity 0.2s;
+  }
+  .nav-links a:hover { color: var(--green); }
+  .nav-links a:hover::before { opacity: 1; }
+
+  /* SECTIONS */
+  section { position: relative; z-index: 1; }
+
+  /* HERO */
+  #hero {
+    min-height: 100vh;
+    display: flex; align-items: center;
+    padding: 8rem 3rem 4rem;
+    position: relative;
+    overflow: hidden;
+  }
+
+  /* Animated grid background */
+  #hero::after {
+    content: '';
+    position: absolute; inset: 0;
+    background-image:
+      linear-gradient(var(--border) 1px, transparent 1px),
+      linear-gradient(90deg, var(--border) 1px, transparent 1px);
+    background-size: 60px 60px;
+    mask-image: radial-gradient(ellipse 80% 80% at 50% 50%, black 20%, transparent 100%);
+    opacity: 0.4;
+    animation: gridPulse 8s ease-in-out infinite;
+  }
+  @keyframes gridPulse {
+    0%, 100% { opacity: 0.4; }
+    50% { opacity: 0.6; }
+  }
+
+  /* Scan line */
+  #hero::before {
+    content: '';
+    position: absolute; left: 0; right: 0; height: 2px;
+    background: linear-gradient(90deg, transparent, var(--green), transparent);
+    animation: scanLine 6s linear infinite;
+    z-index: 2;
+  }
+  @keyframes scanLine {
+    0% { top: 0; opacity: 0; }
+    10% { opacity: 1; }
+    90% { opacity: 1; }
+    100% { top: 100%; opacity: 0; }
+  }
+
+  .hero-content {
+    max-width: 900px;
+    animation: fadeUp 1s ease forwards;
+    opacity: 0;
+  }
+  @keyframes fadeUp {
+    from { opacity: 0; transform: translateY(30px); }
+    to { opacity: 1; transform: translateY(0); }
+  }
+
+  .hero-tag {
+    font-family: 'Share Tech Mono', monospace;
+    color: var(--green); font-size: 0.8rem;
+    letter-spacing: 0.2em; text-transform: uppercase;
+    margin-bottom: 1.5rem;
+    display: flex; align-items: center; gap: 0.8rem;
+  }
+  .hero-tag::before {
+    content: ''; display: block;
+    width: 30px; height: 1px; background: var(--green);
+  }
+
+  .hero-name {
+    font-family: 'Syne', sans-serif;
+    font-weight: 800;
+    font-size: clamp(3.5rem, 8vw, 7rem);
+    line-height: 0.95;
+    letter-spacing: -0.03em;
+    color: #fff;
+    margin-bottom: 1.5rem;
+  }
+  .hero-name span { color: var(--green); }
+
+  .hero-title {
+    font-family: 'Share Tech Mono', monospace;
+    font-size: clamp(0.85rem, 2vw, 1rem);
+    color: var(--cyan);
+    letter-spacing: 0.15em;
+    margin-bottom: 2rem;
+  }
+
+  .hero-bio {
+    font-size: 1.1rem;
+    line-height: 1.8;
+    color: var(--text-dim);
+    max-width: 560px;
+    margin-bottom: 3rem;
+  }
+
+  .hero-cta {
+    display: flex; gap: 1rem; flex-wrap: wrap;
+  }
+  .btn {
+    padding: 0.75rem 2rem;
+    font-family: 'Share Tech Mono', monospace;
+    font-size: 0.8rem; letter-spacing: 0.12em; text-transform: uppercase;
+    text-decoration: none; border: none; cursor: pointer;
+    transition: all 0.25s;
+  }
+  .btn-primary {
+    background: var(--green); color: #000;
+  }
+  .btn-primary:hover {
+    background: #fff;
+    box-shadow: 0 0 30px var(--green);
+    transform: translateY(-2px);
+  }
+  .btn-ghost {
+    border: 1px solid var(--border); color: var(--text);
+    background: transparent;
+  }
+  .btn-ghost:hover {
+    border-color: var(--green); color: var(--green);
+    transform: translateY(-2px);
+  }
+
+  /* SECTION HEADER */
+  .section-header {
+    margin-bottom: 4rem;
+  }
+  .section-tag {
+    font-family: 'Share Tech Mono', monospace;
+    font-size: 0.72rem; color: var(--green);
+    letter-spacing: 0.25em; text-transform: uppercase;
+    margin-bottom: 0.75rem;
+  }
+  .section-title {
+    font-family: 'Syne', sans-serif;
+    font-weight: 800; font-size: clamp(2rem, 4vw, 3rem);
+    color: #fff; line-height: 1.1;
+  }
+  .section-line {
+    width: 60px; height: 2px;
+    background: var(--green); margin-top: 1rem;
+  }
+
+  /* CONTAINER */
+  .container { max-width: 1100px; margin: 0 auto; padding: 6rem 3rem; }
+
+  /* ABOUT */
+  #about { background: var(--bg2); }
+  .about-grid {
+    display: grid; grid-template-columns: 1fr 1.6fr;
+    gap: 5rem; align-items: start;
+  }
+  .avatar-container { position: relative; }
+  .avatar-frame {
+    width: 100%; aspect-ratio: 1;
+    border: 1px solid var(--border);
+    position: relative;
+    overflow: hidden;
+  }
+  .avatar-frame::before {
+    content: '';
+    position: absolute; inset: 0;
+    background: linear-gradient(135deg, var(--green-dim), transparent 60%, #00d4ff20);
+    z-index: 1;
+  }
+  .avatar-inner {
+    width: 100%; height: 100%;
+    background: var(--bg3);
+    display: flex; align-items: center; justify-content: center;
+    font-size: 6rem;
+  }
+  .avatar-corner {
+    position: absolute;
+    width: 20px; height: 20px;
+    border-color: var(--green); border-style: solid;
+  }
+  .avatar-corner.tl { top: -1px; left: -1px; border-width: 2px 0 0 2px; }
+  .avatar-corner.tr { top: -1px; right: -1px; border-width: 2px 2px 0 0; }
+  .avatar-corner.bl { bottom: -1px; left: -1px; border-width: 0 0 2px 2px; }
+  .avatar-corner.br { bottom: -1px; right: -1px; border-width: 0 2px 2px 0; }
+
+  .avatar-stats {
+    margin-top: 1.5rem;
+    display: grid; grid-template-columns: 1fr 1fr;
+    gap: 1px; border: 1px solid var(--border);
+  }
+  .stat {
+    padding: 1rem;
+    background: var(--card);
+    text-align: center;
+  }
+  .stat-num {
+    font-family: 'Syne', sans-serif;
+    font-weight: 800; font-size: 1.5rem;
+    color: var(--green);
+  }
+  .stat-label {
+    font-family: 'Share Tech Mono', monospace;
+    font-size: 0.65rem; color: var(--text-dim);
+    letter-spacing: 0.1em; text-transform: uppercase;
+    margin-top: 0.2rem;
+  }
+
+  .about-text p {
+    color: var(--text-dim); line-height: 1.9;
+    margin-bottom: 1.5rem;
+    font-size: 0.98rem;
+  }
+  .about-text p strong { color: var(--text); font-weight: 400; }
+  .about-highlight {
+    border-left: 2px solid var(--green);
+    padding: 1rem 1.5rem;
+    background: var(--green-glow);
+    margin: 2rem 0;
+    font-style: italic;
+    color: var(--text);
+    font-size: 1rem;
+    line-height: 1.7;
+  }
+  .value-chips {
+    display: flex; flex-wrap: wrap; gap: 0.5rem; margin-top: 1.5rem;
+  }
+  .chip {
+    font-family: 'Share Tech Mono', monospace;
+    font-size: 0.7rem; letter-spacing: 0.1em;
+    padding: 0.35rem 0.8rem;
+    border: 1px solid var(--border);
+    color: var(--text-dim);
+    text-transform: uppercase;
+  }
+  .chip.green { border-color: var(--green-dim); color: var(--green); }
+
+  /* SKILLS */
+  #skills { background: var(--bg); }
+  .skills-grid {
+    display: grid; grid-template-columns: 1fr 1fr;
+    gap: 3rem;
+  }
+  .skill-group-title {
+    font-family: 'Share Tech Mono', monospace;
+    font-size: 0.72rem; color: var(--cyan);
+    letter-spacing: 0.2em; text-transform: uppercase;
+    margin-bottom: 1.5rem;
+    padding-bottom: 0.75rem;
+    border-bottom: 1px solid var(--border);
+  }
+  .skill-item {
+    margin-bottom: 1.5rem;
+  }
+  .skill-row {
+    display: flex; justify-content: space-between;
+    align-items: center; margin-bottom: 0.5rem;
+  }
+  .skill-name {
+    font-size: 0.9rem; color: var(--text);
+    display: flex; align-items: center; gap: 0.6rem;
+  }
+  .skill-icon { font-size: 1rem; }
+  .skill-level {
+    font-family: 'Share Tech Mono', monospace;
+    font-size: 0.65rem; color: var(--text-dim);
+    letter-spacing: 0.1em;
+  }
+  .skill-bar {
+    height: 3px; background: var(--bg3);
+    position: relative; overflow: hidden;
+  }
+  .skill-fill {
+    height: 100%;
+    background: linear-gradient(90deg, var(--green), var(--cyan));
+    position: relative;
+    animation: fillBar 1.5s cubic-bezier(0.4, 0, 0.2, 1) forwards;
+    transform-origin: left;
+    transform: scaleX(0);
+  }
+  @keyframes fillBar {
+    to { transform: scaleX(1); }
+  }
+  .skill-fill::after {
+    content: '';
+    position: absolute; right: 0; top: -1px;
+    width: 6px; height: 5px;
+    background: var(--cyan);
+    border-radius: 50%;
+    box-shadow: 0 0 8px var(--cyan);
+  }
+
+  .tools-grid {
+    display: grid; grid-template-columns: repeat(3, 1fr);
+    gap: 1px; margin-top: 1rem;
+    border: 1px solid var(--border);
+  }
+  .tool-item {
+    background: var(--card);
+    padding: 0.8rem;
+    display: flex; align-items: center; gap: 0.6rem;
+    font-size: 0.78rem; color: var(--text-dim);
+    transition: background 0.2s, color 0.2s;
+  }
+  .tool-item:hover { background: var(--bg3); color: var(--green); }
+  .tool-item .t-icon { font-size: 1rem; }
+
+  /* PROJECTS */
+  #projects { background: var(--bg2); }
+  .projects-grid {
+    display: grid; grid-template-columns: repeat(auto-fill, minmax(320px, 1fr));
+    gap: 1px;
+    border: 1px solid var(--border);
+  }
+  .project-card {
+    background: var(--card);
+    padding: 2rem;
+    position: relative; overflow: hidden;
+    transition: background 0.3s;
+    cursor: default;
+  }
+  .project-card::before {
+    content: '';
+    position: absolute; top: 0; left: 0; right: 0; height: 1px;
+    background: linear-gradient(90deg, transparent, var(--green), transparent);
+    transform: scaleX(0);
+    transition: transform 0.4s;
+  }
+  .project-card:hover { background: var(--bg3); }
+  .project-card:hover::before { transform: scaleX(1); }
+
+  .project-num {
+    font-family: 'Share Tech Mono', monospace;
+    font-size: 0.65rem; color: var(--text-dim);
+    letter-spacing: 0.15em; margin-bottom: 1rem;
+  }
+  .project-icon { font-size: 2rem; margin-bottom: 1rem; }
+  .project-title {
+    font-family: 'Syne', sans-serif;
+    font-weight: 600; font-size: 1.1rem;
+    color: #fff; margin-bottom: 0.75rem;
+  }
+  .project-desc {
+    font-size: 0.85rem; color: var(--text-dim);
+    line-height: 1.7; margin-bottom: 1.5rem;
+  }
+  .project-tags {
+    display: flex; flex-wrap: wrap; gap: 0.4rem;
+    margin-bottom: 1.5rem;
+  }
+  .tag {
+    font-family: 'Share Tech Mono', monospace;
+    font-size: 0.6rem; letter-spacing: 0.08em;
+    padding: 0.2rem 0.6rem;
+    border: 1px solid var(--border);
+    color: var(--text-dim); text-transform: uppercase;
+  }
+  .tag.accent { border-color: var(--green-dim); color: var(--green); }
+  .project-link {
+    font-family: 'Share Tech Mono', monospace;
+    font-size: 0.7rem; color: var(--green);
+    text-decoration: none; letter-spacing: 0.1em;
+    display: flex; align-items: center; gap: 0.4rem;
+    transition: gap 0.2s;
+  }
+  .project-link:hover { gap: 0.8rem; }
+
+  /* LEARNING / TIMELINE */
+  #learning { background: var(--bg); }
+  .timeline {
+    position: relative;
+    padding-left: 2rem;
+  }
+  .timeline::before {
+    content: '';
+    position: absolute; left: 0; top: 0; bottom: 0;
+    width: 1px; background: var(--border);
+  }
+  .timeline-item {
+    position: relative; margin-bottom: 3rem;
+    animation: fadeUp 0.8s ease forwards;
+    opacity: 0;
+  }
+  .timeline-item:nth-child(1) { animation-delay: 0.1s; }
+  .timeline-item:nth-child(2) { animation-delay: 0.2s; }
+  .timeline-item:nth-child(3) { animation-delay: 0.3s; }
+  .timeline-item:nth-child(4) { animation-delay: 0.4s; }
+  .timeline-dot {
+    position: absolute; left: -2.4rem; top: 0.1rem;
+    width: 8px; height: 8px;
+    background: var(--green);
+    border: 2px solid var(--bg);
+    border-radius: 50%;
+    box-shadow: 0 0 12px var(--green);
+  }
+  .timeline-year {
+    font-family: 'Share Tech Mono', monospace;
+    font-size: 0.7rem; color: var(--green);
+    letter-spacing: 0.15em; margin-bottom: 0.5rem;
+  }
+  .timeline-event {
+    font-family: 'Syne', sans-serif;
+    font-weight: 600; font-size: 1.1rem;
+    color: #fff; margin-bottom: 0.5rem;
+  }
+  .timeline-desc {
+    font-size: 0.88rem; color: var(--text-dim); line-height: 1.7;
+  }
+
+  /* CONTACT */
+  #contact { background: var(--bg2); }
+  .contact-inner {
+    display: grid; grid-template-columns: 1fr 1fr;
+    gap: 5rem; align-items: start;
+  }
+  .contact-text p {
+    color: var(--text-dim); font-size: 0.98rem; line-height: 1.8;
+    margin-bottom: 2rem;
+  }
+  .contact-links {
+    display: flex; flex-direction: column; gap: 1rem;
+  }
+  .contact-link {
+    display: flex; align-items: center; gap: 1rem;
+    padding: 1rem 1.2rem;
+    border: 1px solid var(--border);
+    background: var(--card);
+    text-decoration: none;
+    transition: all 0.25s;
+    color: var(--text);
+    font-size: 0.9rem;
+  }
+  .contact-link:hover {
+    border-color: var(--green); color: var(--green);
+    transform: translateX(4px);
+  }
+  .contact-link-icon { font-size: 1.2rem; width: 2rem; }
+
+  .terminal-block {
+    background: var(--bg);
+    border: 1px solid var(--border);
+    padding: 1.5rem;
+    font-family: 'Share Tech Mono', monospace;
+    font-size: 0.8rem;
+  }
+  .terminal-bar {
+    display: flex; gap: 0.4rem; margin-bottom: 1rem;
+  }
+  .dot { width: 10px; height: 10px; border-radius: 50%; }
+  .dot.red { background: var(--red); }
+  .dot.yellow { background: #ffd700; }
+  .dot.green { background: var(--green); }
+  .t-line { color: var(--text-dim); line-height: 2; }
+  .t-line .prompt { color: var(--green); }
+  .t-line .cmd { color: var(--cyan); }
+  .t-line .out { color: var(--text); }
+  .t-line .cursor-blink {
+    display: inline-block;
+    width: 8px; height: 1.1em;
+    background: var(--green); vertical-align: middle;
+    animation: blink 1s step-end infinite;
+  }
+  @keyframes blink { 50% { opacity: 0; } }
+
+  /* FOOTER */
+  footer {
+    padding: 2rem 3rem;
+    border-top: 1px solid var(--border);
+    display: flex; justify-content: space-between; align-items: center;
+    font-family: 'Share Tech Mono', monospace;
+    font-size: 0.65rem; color: var(--text-dim);
+    letter-spacing: 0.1em;
+  }
+  footer span { color: var(--green); }
+
+  /* RESPONSIVE */
+  @media (max-width: 768px) {
+    nav { padding: 1rem 1.5rem; }
+    .nav-links { gap: 1.5rem; }
+    #hero { padding: 7rem 1.5rem 3rem; }
+    .container { padding: 4rem 1.5rem; }
+    .about-grid, .skills-grid, .contact-inner { grid-template-columns: 1fr; gap: 2.5rem; }
+    footer { flex-direction: column; gap: 0.5rem; text-align: center; }
+  }
+</style>
+</head>
+<body>
+
+<!-- Custom Cursor -->
+<div class="cursor" id="cursor"></div>
+<div class="cursor-ring" id="cursorRing"></div>
+
+<!-- NAV -->
+<nav>
+  <div class="nav-logo">~/fahad-alanazi</div>
+  <ul class="nav-links">
+    <li><a href="#about">About</a></li>
+    <li><a href="#skills">Skills</a></li>
+    <li><a href="#projects">Projects</a></li>
+    <li><a href="#learning">Journey</a></li>
+    <li><a href="#contact">Contact</a></li>
+  </ul>
+</nav>
+
+<!-- HERO -->
+<section id="hero">
+  <div class="hero-content">
+    <div class="hero-tag">Available for opportunities</div>
+    <h1 class="hero-name">Fahad<br><span>Alanazi.</span></h1>
+    <p class="hero-title">Cybersecurity Enthusiast &nbsp;|&nbsp; High School Senior &nbsp;|&nbsp; Future Defender</p>
+    <p class="hero-bio">
+      I'm a self-driven high school senior who believes that understanding how systems break is the first step to making them unbreakable. I write code in Python, C#, and C++, and I'm on a mission to turn curiosity into a career in cybersecurity.
+    </p>
+    <div class="hero-cta">
+      <a href="#projects" class="btn btn-primary">View My Work</a>
+      <a href="#contact" class="btn btn-ghost">Get In Touch</a>
+    </div>
+  </div>
+</section>
+
+<!-- ABOUT -->
+<section id="about">
+  <div class="container">
+    <div class="section-header">
+      <div class="section-tag">// about_me</div>
+      <h2 class="section-title">Who I Am</h2>
+      <div class="section-line"></div>
+    </div>
+    <div class="about-grid">
+      <div class="avatar-container">
+        <div class="avatar-frame">
+          <div class="avatar-inner">🛡️</div>
+          <div class="avatar-corner tl"></div>
+          <div class="avatar-corner tr"></div>
+          <div class="avatar-corner bl"></div>
+          <div class="avatar-corner br"></div>
+        </div>
+        <div class="avatar-stats">
+          <div class="stat"><div class="stat-num">3+</div><div class="stat-label">Languages</div></div>
+          <div class="stat"><div class="stat-num">5</div><div class="stat-label">Projects</div></div>
+          <div class="stat"><div class="stat-num">12+</div><div class="stat-label">Mo. Learning</div></div>
+          <div class="stat"><div class="stat-num">∞</div><div class="stat-label">Curiosity</div></div>
+        </div>
+      </div>
+      <div class="about-text">
+        <p>I'm a senior at <strong>Westview High School</strong>, based in Portland, Oregon. My journey into technology wasn't a sudden switch—it was a slow, unstoppable pull. What started as tinkering with a Raspberry Pi in 8th grade eventually led me to writing my first Python script, then my first security tool, and now to building this portfolio.</p>
+        <div class="about-highlight">
+          "The moment I realized that every password, every network packet, every encrypted message tells a story—that's when I knew cybersecurity wasn't just a career path. It was a calling."
+        </div>
+        <p>I started with <strong>Python</strong> in sophomore year, using it to automate small tasks and explore basic scripting. I then challenged myself with <strong>C#</strong> to understand object-oriented design through game mods and small tools. <strong>C++</strong> followed as I became curious about how memory works at a lower level—and how that knowledge underlies nearly every vulnerability ever discovered.</p>
+        <p>Today, my focus is on understanding security from the ground up: how TCP/IP stacks work, why buffer overflows happen, what OWASP vulnerabilities actually look like in real code, and how encryption protects (and sometimes fails to protect) data in transit. I hold myself to a strict standard of <strong>ethical conduct</strong>—I believe knowledge without responsibility is dangerous.</p>
+        <div class="value-chips">
+          <span class="chip green">🔍 Curiosity</span>
+          <span class="chip green">🧩 Problem-Solving</span>
+          <span class="chip green">⚖️ Ethics First</span>
+          <span class="chip">Continuous Learner</span>
+          <span class="chip">Detail-Oriented</span>
+          <span class="chip">Team Player</span>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- SKILLS -->
+<section id="skills">
+  <div class="container">
+    <div class="section-header">
+      <div class="section-tag">// skills_and_tech</div>
+      <h2 class="section-title">What I Know</h2>
+      <div class="section-line"></div>
+    </div>
+    <div class="skills-grid">
+      <div>
+        <div class="skill-group-title">Programming Languages</div>
+        <div class="skill-item">
+          <div class="skill-row">
+            <div class="skill-name"><span class="skill-icon">🐍</span> Python</div>
+            <div class="skill-level">Intermediate</div>
+          </div>
+          <div class="skill-bar"><div class="skill-fill" style="width:70%; animation-delay:0.2s;"></div></div>
+        </div>
+        <div class="skill-item">
+          <div class="skill-row">
+            <div class="skill-name"><span class="skill-icon">⚙️</span> C#</div>
+            <div class="skill-level">Beginner+</div>
+          </div>
+          <div class="skill-bar"><div class="skill-fill" style="width:50%; animation-delay:0.4s;"></div></div>
+        </div>
+        <div class="skill-item">
+          <div class="skill-row">
+            <div class="skill-name"><span class="skill-icon">🔩</span> C++</div>
+            <div class="skill-level">Beginner</div>
+          </div>
+          <div class="skill-bar"><div class="skill-fill" style="width:35%; animation-delay:0.6s;"></div></div>
+        </div>
+        <div class="skill-item">
+          <div class="skill-row">
+            <div class="skill-name"><span class="skill-icon">🌐</span> HTML/CSS/JS</div>
+            <div class="skill-level">Intermediate</div>
+          </div>
+          <div class="skill-bar"><div class="skill-fill" style="width:60%; animation-delay:0.8s;"></div></div>
+        </div>
+        <div class="skill-item">
+          <div class="skill-row">
+            <div class="skill-name"><span class="skill-icon">💻</span> Bash / CLI</div>
+            <div class="skill-level">Beginner+</div>
+          </div>
+          <div class="skill-bar"><div class="skill-fill" style="width:45%; animation-delay:1s;"></div></div>
+        </div>
+      </div>
+
+      <div>
+        <div class="skill-group-title">Security & Concepts</div>
+        <div class="skill-item">
+          <div class="skill-row">
+            <div class="skill-name"><span class="skill-icon">🔐</span> Cryptography Basics</div>
+            <div class="skill-level">Exploring</div>
+          </div>
+          <div class="skill-bar"><div class="skill-fill" style="width:40%; animation-delay:0.3s;"></div></div>
+        </div>
+        <div class="skill-item">
+          <div class="skill-row">
+            <div class="skill-name"><span class="skill-icon">🌍</span> Networking (TCP/IP)</div>
+            <div class="skill-level">Exploring</div>
+          </div>
+          <div class="skill-bar"><div class="skill-fill" style="width:38%; animation-delay:0.5s;"></div></div>
+        </div>
+        <div class="skill-item">
+          <div class="skill-row">
+            <div class="skill-name"><span class="skill-icon">🏆</span> OWASP Top 10</div>
+            <div class="skill-level">Aware</div>
+          </div>
+          <div class="skill-bar"><div class="skill-fill" style="width:45%; animation-delay:0.7s;"></div></div>
+        </div>
+        <div class="skill-item">
+          <div class="skill-row">
+            <div class="skill-name"><span class="skill-icon">💣</span> Buffer Overflow Concepts</div>
+            <div class="skill-level">Learning</div>
+          </div>
+          <div class="skill-bar"><div class="skill-fill" style="width:30%; animation-delay:0.9s;"></div></div>
+        </div>
+
+        <div class="skill-group-title" style="margin-top: 2rem;">Tools & Environments</div>
+        <div class="tools-grid">
+          <div class="tool-item"><span class="t-icon">🐙</span> Git / GitHub</div>
+          <div class="tool-item"><span class="t-icon">🧰</span> VS Code</div>
+          <div class="tool-item"><span class="t-icon">🐧</span> Linux / WSL</div>
+          <div class="tool-item"><span class="t-icon">🦈</span> Wireshark</div>
+          <div class="tool-item"><span class="t-icon">🔎</span> Nmap (basics)</div>
+          <div class="tool-item"><span class="t-icon">🐍</span> Kali (intro)</div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- PROJECTS -->
+<section id="projects">
+  <div class="container">
+    <div class="section-header">
+      <div class="section-tag">// selected_projects</div>
+      <h2 class="section-title">Things I've Built</h2>
+      <div class="section-line"></div>
+    </div>
+    <div class="projects-grid">
+
+      <div class="project-card">
+        <div class="project-num">01 / 05</div>
+        <div class="project-icon">🔑</div>
+        <div class="project-title">PyVault — Password Manager</div>
+        <p class="project-desc">A command-line password manager built in Python using AES-256 encryption via the cryptography library. Stores credentials locally in an encrypted JSON file, protected by a master password hashed with bcrypt.</p>
+        <div class="project-tags">
+          <span class="tag accent">Python</span>
+          <span class="tag">AES-256</span>
+          <span class="tag">bcrypt</span>
+          <span class="tag">CLI</span>
+        </div>
+        <a href="#" class="project-link">View on GitHub →</a>
+      </div>
+
+      <div class="project-card">
+        <div class="project-num">02 / 05</div>
+        <div class="project-icon">🕵️</div>
+        <div class="project-title">NetScan — Port Scanner</div>
+        <p class="project-desc">A Python-based port scanner that uses raw sockets to probe open ports on a target host, displays service banners, and exports results to a simple report. Built to understand how Nmap works under the hood.</p>
+        <div class="project-tags">
+          <span class="tag accent">Python</span>
+          <span class="tag">Sockets</span>
+          <span class="tag">Networking</span>
+          <span class="tag">Ethical Use</span>
+        </div>
+        <a href="#" class="project-link">View on GitHub →</a>
+      </div>
+
+      <div class="project-card">
+        <div class="project-num">03 / 05</div>
+        <div class="project-icon">🧩</div>
+        <div class="project-title">Caesar Cipher Suite (C++)</div>
+        <p class="project-desc">An implementation of classical ciphers (Caesar, Vigenère, ROT-13) in C++ with a frequency analysis module for cracking substitution ciphers — a hands-on dive into the history and math of cryptography.</p>
+        <div class="project-tags">
+          <span class="tag accent">C++</span>
+          <span class="tag">Cryptography</span>
+          <span class="tag">Frequency Analysis</span>
+        </div>
+        <a href="#" class="project-link">View on GitHub →</a>
+      </div>
+
+      <div class="project-card">
+        <div class="project-num">04 / 05</div>
+        <div class="project-icon">🎮</div>
+        <div class="project-title">RPG Inventory System (C#)</div>
+        <p class="project-desc">A Unity-based inventory and crafting system for a personal RPG project. Helped me understand OOP patterns (inheritance, interfaces, serialization) and Unity's component architecture.</p>
+        <div class="project-tags">
+          <span class="tag accent">C#</span>
+          <span class="tag">Unity</span>
+          <span class="tag">OOP</span>
+          <span class="tag">Game Dev</span>
+        </div>
+        <a href="#" class="project-link">View on GitHub →</a>
+      </div>
+
+      <div class="project-card">
+        <div class="project-num">05 / 05</div>
+        <div class="project-icon">📊</div>
+        <div class="project-title">OWASP Log Analyzer</div>
+        <p class="project-desc">A Python script that parses web server logs and flags suspicious patterns matching OWASP Top 10 attack signatures (SQLi patterns, XSS payloads, path traversal). Outputs a color-coded CLI report.</p>
+        <div class="project-tags">
+          <span class="tag accent">Python</span>
+          <span class="tag">OWASP</span>
+          <span class="tag">Regex</span>
+          <span class="tag">Log Analysis</span>
+        </div>
+        <a href="#" class="project-link">View on GitHub →</a>
+      </div>
+
+    </div>
+  </div>
+</section>
+
+<!-- LEARNING JOURNEY -->
+<section id="learning">
+  <div class="container">
+    <div class="section-header">
+      <div class="section-tag">// learning_journey</div>
+      <h2 class="section-title">How I Got Here</h2>
+      <div class="section-line"></div>
+    </div>
+    <div class="timeline">
+      <div class="timeline-item">
+        <div class="timeline-dot"></div>
+        <div class="timeline-year">2021 — Freshman Year</div>
+        <div class="timeline-event">First Lines of Code</div>
+        <p class="timeline-desc">Discovered Python through a YouTube tutorial and built a simple number-guessing game. That moment of making a computer do exactly what I wanted was addictive. I haven't stopped since.</p>
+      </div>
+      <div class="timeline-item">
+        <div class="timeline-dot"></div>
+        <div class="timeline-year">2022 — Sophomore Year</div>
+        <div class="timeline-event">Python Deepdive & First Automation Scripts</div>
+        <p class="timeline-desc">Built file organizers, web scrapers, and a basic Discord bot. Enrolled in AP Computer Science Principles. Discovered the concept of "ethical hacking" through a YouTube documentary—it changed everything.</p>
+      </div>
+      <div class="timeline-item">
+        <div class="timeline-dot"></div>
+        <div class="timeline-year">2023 — Junior Year</div>
+        <div class="timeline-event">Expanding Into C#, C++, and Security</div>
+        <p class="timeline-desc">Started modding games in C#, which taught me OOP deeply. Picked up C++ to understand memory management. Began following CTF competitions (Capture The Flag) as a spectator, studying write-ups to understand how vulnerabilities are exploited responsibly.</p>
+      </div>
+      <div class="timeline-item">
+        <div class="timeline-dot"></div>
+        <div class="timeline-year">2024 — Senior Year</div>
+        <div class="timeline-event">Building, Competing, and Preparing</div>
+        <p class="timeline-desc">Built my first security-adjacent tools (PyVault, NetScan). Participated in my first CTF competition. Started studying for CompTIA Security+. Applying to CS/Cybersecurity programs for Fall 2025. Excited for what comes next.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- CONTACT -->
+<section id="contact">
+  <div class="container">
+    <div class="section-header">
+      <div class="section-tag">// contact</div>
+      <h2 class="section-title">Let's Connect</h2>
+      <div class="section-line"></div>
+    </div>
+    <div class="contact-inner">
+      <div class="contact-text">
+        <p>I'm always open to connecting with mentors, peers, and professionals in the cybersecurity and tech space. Whether you want to discuss a project, share resources, or explore opportunities—I'd love to hear from you.</p>
+                <div class="contact-links">
+          <a href="https://github.com/seventically" target="_blank" class="contact-link">
+            <span class="contact-link-icon">🐙</span>
+            github.com/seventically
+          </a>
+          <a href="https://www.instagram.com/seventically" target="_blank" class="contact-link">
+            <span class="contact-link-icon">📸</span>
+            instagram.com/seventically
+          </a>
+          <a href="https://x.com/Seventically" target="_blank" class="contact-link">
+            <span class="contact-link-icon">🐦</span>
+            x.com/Seventically
+          </a>
+        </div>
+      </div>
+      <div class="terminal-block">
+        <div class="terminal-bar">
+          <div class="dot red"></div>
+          <div class="dot yellow"></div>
+          <div class="dot green"></div>
+        </div>
+        <div class="t-line"><span class="prompt">~/fahad-alanazi $</span> <span class="cmd">whoami</span></div>
+        <div class="t-line"><span class="out">fahad_alanazi — aspiring cybersecurity professional</span></div>
+        <div class="t-line"><span class="prompt">~/fahad-alanazi $</span> <span class="cmd">cat goals.txt</span></div>
+        <div class="t-line"><span class="out">- Earn CompTIA Security+ certification</span></div>
+        <div class="t-line"><span class="out">- Study Computer Science / Cybersecurity</span></div>
+        <div class="t-line"><span class="out">- Contribute to open-source security tools</span></div>
+        <div class="t-line"><span class="out">- Join a CTF team in college</span></div>
+        <div class="t-line"><span class="prompt">~/fahad-alanazi $</span> <span class="cursor-blink"></span></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<footer>
+  <span>// fahad-alanazi-portfolio v1.0</span>
+  <span>Built with HTML · CSS · JS &nbsp;|&nbsp; <span>© 2026 Fahad Alanazi</span></span>
+</footer>
+
+<script data-cfasync="false" src="/cdn-cgi/scripts/5c5dd728/cloudflare-static/email-decode.min.js"></script><script>
+  // Custom cursor
+  const cursor = document.getElementById('cursor');
+  const ring = document.getElementById('cursorRing');
+  document.addEventListener('mousemove', e => {
+    cursor.style.left = e.clientX + 'px';
+    cursor.style.top = e.clientY + 'px';
+    setTimeout(() => {
+      ring.style.left = e.clientX + 'px';
+      ring.style.top = e.clientY + 'px';
+    }, 80);
+  });
+  document.querySelectorAll('a, button, .project-card').forEach(el => {
+    el.addEventListener('mouseenter', () => {
+      cursor.style.transform = 'translate(-50%, -50%) scale(2)';
+      ring.style.width = '60px'; ring.style.height = '60px';
+    });
+    el.addEventListener('mouseleave', () => {
+      cursor.style.transform = 'translate(-50%, -50%) scale(1)';
+      ring.style.width = '36px'; ring.style.height = '36px';
+    });
+  });
+
+  // Intersection observer for skill bars
+  const observer = new IntersectionObserver((entries) => {
+    entries.forEach(entry => {
+      if (entry.isIntersecting) {
+        entry.target.querySelectorAll('.skill-fill').forEach(bar => {
+          bar.style.animationPlayState = 'running';
+        });
+      }
+    });
+  }, { threshold: 0.3 });
+  document.querySelectorAll('#skills').forEach(s => observer.observe(s));
+  document.querySelectorAll('.skill-fill').forEach(bar => {
+    bar.style.animationPlayState = 'paused';
+  });
+
+  // Smooth nav highlight
+  const sections = document.querySelectorAll('section[id]');
+  const navLinks = document.querySelectorAll('.nav-links a');
+  window.addEventListener('scroll', () => {
+    let current = '';
+    sectio
