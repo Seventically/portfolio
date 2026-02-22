@@ -3,6 +3,11 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta http-equiv="Content-Security-Policy" content="default-src 'self'; style-src 'self' 'unsafe-inline' https://fonts.googleapis.com; font-src https://fonts.gstatic.com; img-src 'self' data: https:; script-src 'self' 'unsafe-inline';">
+<meta http-equiv="X-Frame-Options" content="DENY">
+<meta http-equiv="X-Content-Type-Options" content="nosniff">
+<meta http-equiv="Referrer-Policy" content="strict-origin-when-cross-origin">
+<meta http-equiv="Permissions-Policy" content="camera=(), microphone=(), geolocation=()">
 <title>Fahad Alanazi — Cybersecurity Portfolio</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link href="https://fonts.googleapis.com/css2?family=Share+Tech+Mono&family=Syne:wght@400;600;800&family=DM+Sans:ital,wght@0,300;0,400;1,300&display=swap" rel="stylesheet">
@@ -754,7 +759,7 @@
           <span class="tag">bcrypt</span>
           <span class="tag">CLI</span>
         </div>
-        <a href="#" class="project-link">View on GitHub →</a>
+        <a href="#" class="project-link" rel="noopener noreferrer">View on GitHub →</a>
       </div>
 
       <div class="project-card">
@@ -768,7 +773,7 @@
           <span class="tag">Networking</span>
           <span class="tag">Ethical Use</span>
         </div>
-        <a href="#" class="project-link">View on GitHub →</a>
+        <a href="#" class="project-link" rel="noopener noreferrer">View on GitHub →</a>
       </div>
 
       <div class="project-card">
@@ -781,7 +786,7 @@
           <span class="tag">Cryptography</span>
           <span class="tag">Frequency Analysis</span>
         </div>
-        <a href="#" class="project-link">View on GitHub →</a>
+        <a href="#" class="project-link" rel="noopener noreferrer">View on GitHub →</a>
       </div>
 
       <div class="project-card">
@@ -795,7 +800,7 @@
           <span class="tag">OOP</span>
           <span class="tag">Game Dev</span>
         </div>
-        <a href="#" class="project-link">View on GitHub →</a>
+        <a href="#" class="project-link" rel="noopener noreferrer">View on GitHub →</a>
       </div>
 
       <div class="project-card">
@@ -809,7 +814,7 @@
           <span class="tag">Regex</span>
           <span class="tag">Log Analysis</span>
         </div>
-        <a href="#" class="project-link">View on GitHub →</a>
+        <a href="#" class="project-link" rel="noopener noreferrer">View on GitHub →</a>
       </div>
 
     </div>
@@ -865,15 +870,15 @@
       <div class="contact-text">
         <p>I'm always open to connecting with mentors, peers, and professionals in the cybersecurity and tech space. Whether you want to discuss a project, share resources, or explore opportunities—I'd love to hear from you.</p>
                 <div class="contact-links">
-          <a href="https://github.com/seventically" target="_blank" class="contact-link">
+          <a href="https://github.com/seventically" target="_blank" rel="noopener noreferrer" class="contact-link">
             <span class="contact-link-icon">🐙</span>
             github.com/seventically
           </a>
-          <a href="https://www.instagram.com/seventically" target="_blank" class="contact-link">
+          <a href="https://www.instagram.com/seventically" target="_blank" rel="noopener noreferrer" class="contact-link">
             <span class="contact-link-icon">📸</span>
             instagram.com/seventically
           </a>
-          <a href="https://x.com/Seventically" target="_blank" class="contact-link">
+          <a href="https://x.com/Seventically" target="_blank" rel="noopener noreferrer" class="contact-link">
             <span class="contact-link-icon">🐦</span>
             x.com/Seventically
           </a>
@@ -904,6 +909,8 @@
 </footer>
 
 <script data-cfasync="false" src="/cdn-cgi/scripts/5c5dd728/cloudflare-static/email-decode.min.js"></script><script>
+  // Security: all DOM interactions deferred until document ready
+  document.addEventListener('DOMContentLoaded', function() {
   // Custom cursor — desktop only
   const isTouchDevice = window.matchMedia('(hover: none)').matches;
   const cursor = document.getElementById('cursor');
