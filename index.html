@@ -32,7 +32,6 @@
     font-family: 'DM Sans', sans-serif;
     font-weight: 300;
     overflow-x: hidden;
-    cursor: none;
   }
 
   /* CUSTOM CURSOR */
@@ -613,13 +612,7 @@
     </div>
     <div class="about-grid">
       <div class="avatar-container">
-        <div class="avatar-frame">
-          <div class="avatar-inner">🛡️</div>
-          <div class="avatar-corner tl"></div>
-          <div class="avatar-corner tr"></div>
-          <div class="avatar-corner bl"></div>
-          <div class="avatar-corner br"></div>
-        </div>
+        
         <div class="avatar-stats">
           <div class="stat"><div class="stat-num">3+</div><div class="stat-label">Languages</div></div>
           <div class="stat"><div class="stat-num">5</div><div class="stat-label">Projects</div></div>
@@ -911,27 +904,34 @@
 </footer>
 
 <script data-cfasync="false" src="/cdn-cgi/scripts/5c5dd728/cloudflare-static/email-decode.min.js"></script><script>
-  // Custom cursor
+  // Custom cursor — desktop only
+  const isTouchDevice = window.matchMedia('(hover: none)').matches;
   const cursor = document.getElementById('cursor');
   const ring = document.getElementById('cursorRing');
-  document.addEventListener('mousemove', e => {
-    cursor.style.left = e.clientX + 'px';
-    cursor.style.top = e.clientY + 'px';
-    setTimeout(() => {
-      ring.style.left = e.clientX + 'px';
-      ring.style.top = e.clientY + 'px';
-    }, 80);
-  });
-  document.querySelectorAll('a, button, .project-card').forEach(el => {
-    el.addEventListener('mouseenter', () => {
-      cursor.style.transform = 'translate(-50%, -50%) scale(2)';
-      ring.style.width = '60px'; ring.style.height = '60px';
+  if (!isTouchDevice) {
+    document.body.style.cursor = 'none';
+    document.addEventListener('mousemove', e => {
+      cursor.style.left = e.clientX + 'px';
+      cursor.style.top = e.clientY + 'px';
+      setTimeout(() => {
+        ring.style.left = e.clientX + 'px';
+        ring.style.top = e.clientY + 'px';
+      }, 80);
     });
-    el.addEventListener('mouseleave', () => {
-      cursor.style.transform = 'translate(-50%, -50%) scale(1)';
-      ring.style.width = '36px'; ring.style.height = '36px';
+    document.querySelectorAll('a, button, .project-card').forEach(el => {
+      el.addEventListener('mouseenter', () => {
+        cursor.style.transform = 'translate(-50%, -50%) scale(2)';
+        ring.style.width = '60px'; ring.style.height = '60px';
+      });
+      el.addEventListener('mouseleave', () => {
+        cursor.style.transform = 'translate(-50%, -50%) scale(1)';
+        ring.style.width = '36px'; ring.style.height = '36px';
+      });
     });
-  });
+  } else {
+    cursor.style.display = 'none';
+    ring.style.display = 'none';
+  }
 
   // Intersection observer for skill bars
   const observer = new IntersectionObserver((entries) => {
