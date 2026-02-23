@@ -13,18 +13,18 @@
 <link href="https://fonts.googleapis.com/css2?family=Share+Tech+Mono&family=Syne:wght@400;600;800&family=DM+Sans:ital,wght@0,300;0,400;1,300&display=swap" rel="stylesheet">
 <style>
   :root {
-    --bg: #060a0f;
-    --bg2: #0d1520;
-    --bg3: #111c2e;
-    --green: #00ff88;
-    --green-dim: #00ff8844;
-    --green-glow: #00ff8820;
-    --cyan: #00d4ff;
-    --red: #ff3366;
-    --text: #c8d8e8;
-    --text-dim: #5a7a9a;
-    --border: #1a3050;
-    --card: #0a1828;
+    --bg: #000000;
+    --bg2: #030303;
+    --bg3: #0a0a0a;
+    --green: #00ff41;
+    --green-dim: #00ff4133;
+    --green-glow: #00ff4115;
+    --cyan: #00ff41;
+    --red: #ff0000;
+    --text: #cccccc;
+    --text-dim: #555555;
+    --border: #1a1a1a;
+    --card: #080808;
   }
 
   * { margin: 0; padding: 0; box-sizing: border-box; }
@@ -170,7 +170,7 @@
     color: #fff;
     margin-bottom: 1.5rem;
   }
-  .hero-name span { color: var(--green); }
+  .hero-name span { color: #00ff41; text-shadow: 0 0 20px #00ff41, 0 0 40px #00ff4180; }
 
   .hero-title {
     font-family: 'Share Tech Mono', monospace;
@@ -626,6 +626,18 @@
     font-size: 0.8rem; color: var(--green);
     margin-top: 1rem; letter-spacing: 0.1em;
   }
+
+  @keyframes glitch {
+    0% { text-shadow: none; transform: none; }
+    92% { text-shadow: none; transform: none; }
+    93% { text-shadow: -3px 0 #ff0000; transform: skewX(-1deg); }
+    94% { text-shadow: 3px 0 #00ff41; transform: skewX(1deg); }
+    95% { text-shadow: none; transform: none; }
+    97% { text-shadow: -2px 0 #ff0000; transform: translateX(-2px); }
+    98% { text-shadow: 2px 0 #00ff41; transform: translateX(2px); }
+    100% { text-shadow: none; transform: none; }
+  }
+  #glitchName { animation: glitch 4s infinite; }
 </style>
 </head>
 <body>
@@ -648,9 +660,12 @@
 
 <!-- HERO -->
 <section id="hero">
-  <div class="hero-content">
+  
+  <!-- Matrix Rain -->
+  <canvas id="matrixCanvas" style="position:absolute;top:0;left:0;width:100%;height:100%;opacity:0.08;pointer-events:none;z-index:0;"></canvas>
+<div class="hero-content" style="position:relative;z-index:2;">
     <div class="hero-tag">Available for opportunities</div>
-    <h1 class="hero-name">Fahad<br><span>Alanazi.</span></h1>
+    <h1 class="hero-name" id="glitchName">Fahad<br><span>Alanazi.</span></h1>
     <p class="hero-title">Cybersecurity Enthusiast &nbsp;|&nbsp; High School Senior &nbsp;|&nbsp; Future Defender</p>
     <p class="hero-bio">
       I'm a self-driven high school senior who believes that understanding how systems break is the first step to making them unbreakable. I write code in Python, C#, and C++, and I'm on a mission to turn curiosity into a career in cybersecurity.
@@ -681,7 +696,7 @@
         </div>
       </div>
       <div class="about-text">
-        <p>I'm a senior at <strong>Westview High School</strong>, based in Portland, Oregon. My journey into technology wasn't a sudden switch—it was a slow, unstoppable pull. What started as tinkering with a Raspberry Pi in 8th grade eventually led me to writing my first Python script, then my first security tool, and now to building this portfolio.</p>
+        <p>I'm a senior at <strong>Ibn Khaldun Private School</strong>, based in Riyadh, Saudi Arabia. My journey into technology wasn't a sudden switch—it was a slow, unstoppable pull. What started as tinkering with a Raspberry Pi in 8th grade eventually led me to writing my first Python script, then my first security tool, and now to building this portfolio.</p>
         <div class="about-highlight">
           "The moment I realized that every password, every network packet, every encrypted message tells a story—that's when I knew cybersecurity wasn't just a career path. It was a calling."
         </div>
